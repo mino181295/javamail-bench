@@ -39,7 +39,6 @@ public class Mail {
 	}
 	
 	public Message generateMime(Session currentSession) throws MessagingException {
-		System.out.println(attachment.isPresent());
 		if (attachment.isPresent()){
 			return generateTextWithAttachment(currentSession);
 		} else {
@@ -53,7 +52,8 @@ public class Mail {
 		mime.setRecipient(Message.RecipientType.TO, sendTo.getMail());
 		mime.setSubject(this.objectField);
 		mime.setSentDate(new Date());
-		mime.setText(this.textField);		
+		mime.setText(this.textField);	
+		mime.saveChanges();
 		return mime;
 		
 	}
@@ -78,6 +78,7 @@ public class Mail {
         
         
         mime.setContent(multipart);
+        mime.saveChanges();
 		return mime;
 	}
 	
