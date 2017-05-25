@@ -88,6 +88,7 @@ public class ConnectionManager {
 		}
 		transport.close();
 		timeTracker.stopBenchmark();
+		mailList.clear();
 	}
 
 	public void differentConnectionSend() throws MessagingException{
@@ -102,6 +103,7 @@ public class ConnectionManager {
 			}
 		}
 		timeTracker.stopBenchmark();
+		mailList.clear();
 	}
 	
 	public Benchmark getCurrentBenchmark(){

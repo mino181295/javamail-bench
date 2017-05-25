@@ -12,22 +12,22 @@ import it.test.model.User;
 
 public class App {
 	public static void main( String[] args ) {
-		User sender = new User("mino181295@gmail.com", "");
-		User reciver = new User("nekup@dnsdeer.com");
+		User sender = new User("test.diennea@gmail.com", "test2017");
+		User reciver = new User("test.diennea@gmail.com");
 		
 		ConnectionManager cm = new ConnectionManager(sender, reciver);
 		
 		Mail tempMail = null;
 		try {
 			for(int i = 0; i<10; i++){
-				tempMail = MailFactory.createSimpleMail(reciver, sender, i, 100);
+				tempMail = MailFactory.createMailWithAttachment(reciver, sender, i, 100, 1);
 				cm.addMail(tempMail);
 			}
 		} catch (AddressException e) {
 			e.printStackTrace();
 		}
 		try {
-			cm.differentConnectionSend();
+			cm.sameConnectionSend();
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		}		
