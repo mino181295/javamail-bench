@@ -16,12 +16,12 @@ public class ConnectionManager {
 	private Properties props;
 	
 	protected User mailSender;
-	private User mailReciver;
+	//private User mailReciver;
 	
 	private Session currentSession;
 	
 	public ConnectionManager(User mailSender, User mailReciver){
-		this.mailReciver = mailReciver;
+		//this.mailReciver = mailReciver;
 		this.mailSender = mailSender;
 		
 		this.mailList = new LinkedList<Mail>();
@@ -43,7 +43,9 @@ public class ConnectionManager {
 		this.currentSession = Session.getInstance(props, new Authenticator() {
 			@Override
 			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication(mailSender.getMail(), mailSender.getPass());	
+				String username = mailSender.getMail().getAddress();
+				String password = mailSender.getPass();
+				return new PasswordAuthentication(username, password);	
 			}
 		});
 	}	
@@ -65,6 +67,7 @@ public class ConnectionManager {
 	public void differentConnectionSend() throws MessagingException{
 		for (Mail mail : mailList) {
 	    	Transport.send(mail.generateMime(currentSession));
+	    	System.out.println("Mail inviata");
 	    }
 	}
 

@@ -3,35 +3,32 @@ package it.test.mail_bench;
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 
-import it.test.model.Mail;
 import it.test.model.ConnectionManager;
+import it.test.model.Mail;
+import it.test.model.MailFactory;
 import it.test.model.User;
 
-public class App 
-{
-	public static void main( String[] args )
-	{
-
-
+public class App {
+	public static void main( String[] args ) {
 		User sender = new User("mino181295@gmail.com", "");
 		User reciver = new User("minardi.matteo@hotmail.it");
-		Mail helloMail = null;
-
+		
+		ConnectionManager cm = new ConnectionManager(sender, reciver);
+		
+		Mail firstAttachmentMail = null;
 		try {
-			helloMail = new Mail(reciver.getMail(), sender.getMail(), "Hello mail", "Prima mail");
+			firstAttachmentMail = MailFactory.createMailWithAttachment(reciver, sender, 1, 10, 1);
 		} catch (AddressException e) {
 			e.printStackTrace();
 		}
-
-		ConnectionManager manager = new ConnectionManager(sender, reciver);
-		manager.addMail(helloMail);
+		
+		cm.addMail(firstAttachmentMail);
 		try {
-			manager.differentConnectionSend();
+			cm.differentConnectionSend();
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		}
-
-		System.out.println("Mail inviata");
-
+		
+		System.out.println("Done");
 	}
 }
