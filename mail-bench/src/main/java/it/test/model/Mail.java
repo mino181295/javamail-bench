@@ -76,7 +76,6 @@ public class Mail {
         messageBodyPart.setFileName(attachment.get().getAttachmentName());
         multipart.addBodyPart(messageBodyPart);
         
-        
         mime.setContent(multipart);
         mime.saveChanges();
 		return mime;
