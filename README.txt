@@ -33,6 +33,8 @@ La realizzazione ha impiegato circa 12-15 ore all'interno di una settimana e qui
 Github repo : https://github.com/mino181295/javamail-bench.git
 
 CONFIGURAZIONE:
-	
-	-
-
+	1 : 
+	- Import the project as maven project. Make sure your java version is 1.7 or higher.
+	- Run the project as a Java application.
+	2 :
+	- Run the jar file
