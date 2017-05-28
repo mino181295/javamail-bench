@@ -20,7 +20,6 @@ public class User {
 	public User(String mail) throws AddressException{
 		this.mail = new InternetAddress(mail);
 		this.mail.validate();
-		
 
 		this.pass = Optional.empty();
 	}
@@ -49,6 +48,5 @@ public class User {
 	public void setPass(String pass) {
 		this.pass = Optional.of(pass);
 	}
-
 
 }

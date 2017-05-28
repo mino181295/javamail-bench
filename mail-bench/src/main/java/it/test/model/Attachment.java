@@ -13,7 +13,7 @@ public class Attachment {
 	private File attachedFile;
 	private RandomAccessFile defaultAttachment;
 
-	
+	//Generate attachment
 	public Attachment(String attachmentName, double attachmentSize){
 		this.attachmentName = attachmentName;
 		this.attachedFile = new File(attachmentName);

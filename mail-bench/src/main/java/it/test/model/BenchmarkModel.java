@@ -93,8 +93,8 @@ public class BenchmarkModel implements Model, Observable, ProgressListener {
 					notifyObservers(resultBuilder.toString());
 				}		
 			});
-		} catch (InvocationTargetException e) {	}
-		  catch (InterruptedException e) {}
+		} catch (InvocationTargetException e) {	System.err.println("Error in invoke");}
+		  catch (InterruptedException e) {System.err.println("Error in invoke");}
 
 	}
 
@@ -122,13 +122,11 @@ public class BenchmarkModel implements Model, Observable, ProgressListener {
 		return TimeUnit.NANOSECONDS.toMillis(nanoSeconds);
 	}
 
-	@Override
 	public void progressChanged() {
 		totalProgress = currentBench + connectionManager.getProgress();
 		notifyObservers(totalProgress/nBench);
 	}
 
-	@Override
 	public void deleteAttachments() {
 		connectionManager.deleteMails();
 	}

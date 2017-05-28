@@ -132,7 +132,6 @@ public class ConnectionManager implements ProgressManager {
 		this.mailList.clear();
 	}
 
-	@Override
 	public void addProgressListener(ProgressListener p) {
 		this.progressListeners.add(p);
 	}

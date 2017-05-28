@@ -91,10 +91,4 @@ public class Mail {
 		}		
 	}
 
-	@Override
-	public String toString() {
-		return "Mail [\nsendTo=" + sendTo + ",\nsentFrom=" + sentFrom + ", \nobjectField=" + objectField + ", \ntextField="
-				+ textField + "\n]";
-	}
-
 }

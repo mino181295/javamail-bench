@@ -28,9 +28,7 @@ public class Controller {
 		
 		if (benchmarkModel instanceof Observable &&  benchmarkView instanceof Observer){
 			((Observable)benchmarkModel).addObserver((Observer)benchmarkView);
-			//Done
-		}		
-
+		}
 		benchmarkView.addStartButtonListener(new StartActionListener());
 		benchmarkView.addMailCheckListener(new TextChangeListener());
 	}
@@ -41,7 +39,6 @@ public class Controller {
 
 	private class StartActionListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			//TODO Start the model			
 			List<JTextField> textList = benchmarkView.getTextList();
 			try {
 				//Input check
@@ -73,7 +70,7 @@ public class Controller {
 				if (attachmentSize < 0) {
 					throw new NumberFormatException("Attachment size not valid");
 				}
-				
+				//Launche the main thread to execute the smtp benchmark
 				new Thread(new Runnable(){
 					public void run() {
 						try {
@@ -86,8 +83,14 @@ public class Controller {
 							benchmarkModel.deleteAttachments();
 						} catch (MessagingException e) {
 							try {
-								SwingUtilities.invokeAndWait(()-> benchmarkView.showErrorDialog("Connection error"));
-							} catch (Exception ex) {}
+								SwingUtilities.invokeAndWait(new Runnable() {
+									public void run() {
+										benchmarkView.showErrorDialog("Connection error");
+									}
+								});
+							} catch (Exception ex) {
+								System.err.println("Error in threads");
+							}
 						}						
 					}					
 				}).start();
