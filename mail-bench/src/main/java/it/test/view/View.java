@@ -15,6 +15,10 @@ public interface View {
 	
 	void showErrorDialog(String errorMessage);	
 	
+	void showProgressBar();
+	
+	void closeProgressBar();
+	
 	List<JLabel> getLabelList();
 	
 	List<JTextField> getTextList();

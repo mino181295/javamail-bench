@@ -13,9 +13,10 @@ import javax.mail.Transport;
 
 import it.test.model.Benchmark.BenchmarkException;
 
-public class ConnectionManager {
+public class ConnectionManager implements ProgressManager {
 
 	private List<Mail> mailList;
+	private int sentMails;
 	private Benchmark timeTracker;	
 
 	private User mailSender;
@@ -25,6 +26,8 @@ public class ConnectionManager {
 	
 	private Session currentSession;
 	private Properties props;
+	
+	private List<ProgressListener> progressListeners;
 
 	public ConnectionManager(User mailSender, User mailReciver, String smtpServer){
 		this.mailReciver = mailReciver;
@@ -33,6 +36,9 @@ public class ConnectionManager {
 		this.smtpServer = smtpServer;
 
 		this.mailList = new LinkedList<Mail>();
+		this.sentMails = 0;
+		this.progressListeners = new LinkedList<ProgressListener>();
+		
 		timeTracker = new Benchmark();
 
 		this.props = new Properties();
@@ -77,6 +83,7 @@ public class ConnectionManager {
 	}
 
 	public void sameConnectionSend() throws MessagingException {
+		this.sentMails = 0;
 		timeTracker.startBenchmark();
 		Transport transport = currentSession.getTransport("smtp");
 		transport.connect();
@@ -86,6 +93,8 @@ public class ConnectionManager {
 				timeTracker.start();
 				transport.sendMessage(mail.generateMime(currentSession), singleReciver);
 				timeTracker.stopAndSave();
+				sentMails++;
+				this.notifyProgressChanged();
 			} catch (BenchmarkException e) {
 				e.printStackTrace();
 			}
@@ -95,12 +104,15 @@ public class ConnectionManager {
 	}
 
 	public void differentConnectionSend() throws MessagingException{
+		this.sentMails = 0;
 		timeTracker.startBenchmark();
 		for (Mail mail : mailList) {
 			try {
 				timeTracker.start();
 				Transport.send(mail.generateMime(currentSession));
 				timeTracker.stopAndSave();
+				sentMails++;
+				this.notifyProgressChanged();
 			} catch (BenchmarkException e) {
 				e.printStackTrace();
 			}
@@ -117,4 +129,22 @@ public class ConnectionManager {
 		this.mailList.clear();
 	}
 
+	@Override
+	public void addProgressListener(ProgressListener p) {
+		this.progressListeners.add(p);
+	}
+	
+	public void notifyProgressChanged(){
+		for (ProgressListener p : this.progressListeners) {
+			p.progressChanged();
+		}
+	}
+	
+	public double getProgress(){
+		double k = this.sentMails;
+		double n = this.mailList.size();
+		
+		return k/n;
+		
+	}
 }

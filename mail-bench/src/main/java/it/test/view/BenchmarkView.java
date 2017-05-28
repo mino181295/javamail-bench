@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ProgressMonitor;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentListener;
 
@@ -22,21 +23,19 @@ public class BenchmarkView implements View, Observer{
 
 	private final static String TITLE = "SMTP Benchmark";
 
-	private JLabel titleLabel;
-	private JFrame mainFrame;
-	private JPanel mainPanel;
-	private JPanel centerPanel;
-	private JPanel setupPanel;
-	//	private ProgressMonitor progressBar;
-	//	private JDialog progressBarDialog;
-	//	private JProgressBar progressBar;
-	private JTextArea resultArea;
+	private final JLabel titleLabel;
+	private final JFrame mainFrame;
+	private final JPanel mainPanel;
+	private final JPanel centerPanel;
+	private final JPanel setupPanel;
+	private ProgressMonitor progressBar;
+	private final JTextArea resultArea;
+	private final JButton startButton;
 
-	String [] labelNames = {"Sender mail", "Sender SMTP Server", "Password", "Reciver mail", "Mail number to test", "Attachment Size"};
+	String [] labelNames = {"Sender mail", "Password", "Reciver mail", "Mail number to test","Text length", "Attachment Size"};
 	List<JLabel> labelComponents;
 	List<JTextField> textComponents;
 
-	JButton startButton;
 
 	public BenchmarkView(){
 		mainFrame = new JFrame();
@@ -61,6 +60,8 @@ public class BenchmarkView implements View, Observer{
 			}
 		}
 		
+		textComponents.get(findIndexOf("Sender mail")).setText("test.diennea@gmail.com");
+		
 		setupFrame();
 		setupPanel();
 		setupLabel();
@@ -73,8 +74,9 @@ public class BenchmarkView implements View, Observer{
 
 	private void setupResultArea() {
 		resultArea.setEditable(false);
-		resultArea.setRows(10);
-
+		resultArea.setRows(14);
+		//Adding the result area.
+		centerPanel.add(resultArea, BorderLayout.SOUTH);
 	}
 
 	public void show(){
@@ -105,8 +107,6 @@ public class BenchmarkView implements View, Observer{
 			setupPanel.add(textComponents.get(i));
 		}		
 		centerPanel.add(setupPanel, BorderLayout.NORTH);
-		//Adding the result area.
-		centerPanel.add(resultArea, BorderLayout.SOUTH);
 		//Adding the main panel to the content pane.
 		mainFrame.getContentPane().add(mainPanel);
 	}
@@ -144,10 +144,15 @@ public class BenchmarkView implements View, Observer{
 				errorMessage,
 				"Error",
 				JOptionPane.ERROR_MESSAGE);
+		startButton.setEnabled(true);
 	}
 
 	public void updateView(String result) {
 		resultArea.setText(result);		
+	}
+
+	public void updateView(double progress) {
+		this.progressBar.setProgress((int)(progress*100));
 	}
 
 	public List<JLabel> getLabelList() {		
@@ -156,6 +161,19 @@ public class BenchmarkView implements View, Observer{
 
 	public List<JTextField> getTextList() {
 		return this.textComponents;
+	}
+	
+	public void showProgressBar(){
+		progressBar = new ProgressMonitor(mainFrame,
+                "",
+                "Completing the benchmark..", 0, 100);
+		progressBar.setMillisToPopup(0);
+		startButton.setEnabled(false);
+	}
+	
+	public void closeProgressBar(){
+		progressBar.close();
+		startButton.setEnabled(true);
 	}
 
 }

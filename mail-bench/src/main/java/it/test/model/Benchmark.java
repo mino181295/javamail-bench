@@ -93,6 +93,9 @@ public class Benchmark {
 
 
 	public class BenchmarkException extends Exception {
+
+		private static final long serialVersionUID = 1L;
+
 		public BenchmarkException(String e){
 			super(e);
 		}		

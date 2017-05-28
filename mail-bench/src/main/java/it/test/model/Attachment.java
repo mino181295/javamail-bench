@@ -8,16 +8,16 @@ import java.io.RandomAccessFile;
 public class Attachment {
 	
 	private String attachmentName;
-	private int fileSize;
+	private long fileSize;
 	
 	private File attachedFile;
 	private RandomAccessFile defaultAttachment;
 
 	
-	public Attachment(String attachmentName, int megabyteSize){
+	public Attachment(String attachmentName, double attachmentSize){
 		this.attachmentName = attachmentName;
 		this.attachedFile = new File(attachmentName);
-		this.fileSize = megabyteSize * 1024 * 1024;
+		this.fileSize = (int)(attachmentSize * 1024 * 1024);
 		try {
 			this.defaultAttachment = new RandomAccessFile(attachedFile, "rw");
 			defaultAttachment.setLength(fileSize);
