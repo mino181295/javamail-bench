@@ -125,7 +125,10 @@ public class ConnectionManager implements ProgressManager {
 		return this.timeTracker;
 	}
 	
-	public void mailListClear(){
+	public void deleteMails(){
+		for (Mail mail : mailList) {
+			mail.deleteAttachment();
+		}
 		this.mailList.clear();
 	}
 

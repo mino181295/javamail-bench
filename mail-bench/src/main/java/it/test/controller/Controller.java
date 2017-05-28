@@ -82,7 +82,8 @@ public class Controller {
 							benchmarkView.showProgressBar();
 							System.out.println("Showed");
 							benchmarkModel.startTest();
-							benchmarkView.closeProgressBar();							
+							benchmarkView.closeProgressBar();
+							benchmarkModel.deleteAttachments();
 						} catch (MessagingException e) {
 							try {
 								SwingUtilities.invokeAndWait(()-> benchmarkView.showErrorDialog("Connection error"));
@@ -104,7 +105,6 @@ public class Controller {
 		public void removeUpdate(DocumentEvent e) {}
 
 		public void changedUpdate(DocumentEvent e) {
-			//TODO Mail check listener
 		}		
 	}
 

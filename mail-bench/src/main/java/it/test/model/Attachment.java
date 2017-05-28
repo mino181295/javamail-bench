@@ -33,21 +33,21 @@ public class Attachment {
 		return attachmentName;
 	}
 
-
 	public void setAttachmentName(String attachmentName) {
 		this.attachmentName = attachmentName;
 	}
-
 
 	public RandomAccessFile getDefaultAttachment() {
 		return defaultAttachment;
 	}
 
-
 	public void setDefaultAttachment(RandomAccessFile defaultAttachment) {
 		this.defaultAttachment = defaultAttachment;
 	}
-
+	
+	public void delete(){
+		this.attachedFile.delete();
+	}
 
 	@Override
 	public String toString() {

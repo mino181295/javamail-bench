@@ -84,6 +84,12 @@ public class Mail {
 	public void setAttachment(Attachment attachment) {
 		this.attachment = Optional.of(attachment);
 	}
+	
+	public void deleteAttachment(){
+		if (this.attachment.isPresent()){
+			this.attachment.get().delete();
+		}		
+	}
 
 	@Override
 	public String toString() {

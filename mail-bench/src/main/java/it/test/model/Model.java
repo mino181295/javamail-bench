@@ -10,4 +10,6 @@ public interface Model {
 	
 	void startTest() throws MessagingException;
 	
+	void deleteAttachments();
+	
 }

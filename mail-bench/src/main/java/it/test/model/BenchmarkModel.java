@@ -128,4 +128,9 @@ public class BenchmarkModel implements Model, Observable, ProgressListener {
 		notifyObservers(totalProgress/nBench);
 	}
 
+	@Override
+	public void deleteAttachments() {
+		connectionManager.deleteMails();
+	}
+
 }
