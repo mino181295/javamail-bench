@@ -18,15 +18,19 @@ public class ConnectionManager {
 	private List<Mail> mailList;
 	private Benchmark timeTracker;	
 
-	protected User mailSender;
+	private User mailSender;
 	private User mailReciver;
 
+	private String smtpServer;
+	
 	private Session currentSession;
 	private Properties props;
 
-	public ConnectionManager(User mailSender, User mailReciver){
+	public ConnectionManager(User mailSender, User mailReciver, String smtpServer){
 		this.mailReciver = mailReciver;
 		this.mailSender = mailSender;
+		
+		this.smtpServer = smtpServer;
 
 		this.mailList = new LinkedList<Mail>();
 		timeTracker = new Benchmark();
@@ -39,8 +43,8 @@ public class ConnectionManager {
 	private void propSetup(){
 		this.props.put("mail.smtp.auth", "true");
 		this.props.put("mail.smtp.starttls.enable", "true");
-		this.props.put("mail.smtp.host", "smtp.gmail.com");
-		this.props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+		this.props.put("mail.smtp.host", smtpServer);
+		this.props.put("mail.smtp.ssl.trust", smtpServer);
 		this.props.put("mail.smtp.port", "587");
 	}	
 
@@ -88,7 +92,6 @@ public class ConnectionManager {
 		}
 		transport.close();
 		timeTracker.stopBenchmark();
-		mailList.clear();
 	}
 
 	public void differentConnectionSend() throws MessagingException{
@@ -108,6 +111,10 @@ public class ConnectionManager {
 	
 	public Benchmark getCurrentBenchmark(){
 		return this.timeTracker;
+	}
+	
+	public void mailListClear(){
+		this.mailList.clear();
 	}
 
 }

@@ -10,23 +10,18 @@ public class User {
 	private InternetAddress mail;
 	private Optional<String> pass;
 
-	public User(String mail, String pass){
-		try {
-			this.mail = new InternetAddress(mail);
-			this.mail.validate();
-		} catch (AddressException e) {
-			System.err.println("Invalid address format");
-		}
+	public User(String mail, String pass) throws AddressException{
+		this.mail = new InternetAddress(mail);
+		this.mail.validate();
+
 		this.pass = Optional.of(pass);
 	}
 
-	public User(String mail){
-		try {
-			this.mail = new InternetAddress(mail);
-			this.mail.validate();
-		} catch (AddressException e) {
-			System.err.println("Invalid address format");
-		}
+	public User(String mail) throws AddressException{
+		this.mail = new InternetAddress(mail);
+		this.mail.validate();
+		
+
 		this.pass = Optional.empty();
 	}
 

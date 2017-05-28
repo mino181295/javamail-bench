@@ -26,7 +26,7 @@ public class Mail {
 
 	private Optional<Attachment> attachment;	
 
-	public Mail(User sendTo, User sentFrom, String object, String text ) throws AddressException {
+	public Mail(User sendTo, User sentFrom, String object, String text ) {
 		this.sendTo = sendTo;
 		this.sentFrom = sentFrom;		
 		this.objectField = object;
