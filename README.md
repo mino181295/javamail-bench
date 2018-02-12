@@ -1,4 +1,5 @@
-SMTP Benchmark
+# SMTP Benchmark
+## Mail bench project
 Scritto da Matteo Minardi nel 2017 <minardi.matteo(at)hotmail.it>
 
 BREVE SPIEGAZIONE PROGETTO:
